@@ -83,7 +83,7 @@
     // Add -ai to remove AI results
     let finalQuery = query + " -ai";
 
-    let url = "https://www.google.com/search?q=" + encodeURIComponent(finalQuery);
+let url = "https://www.google.com/search?udm=14&q=" + encodeURIComponent(query);
 
     window.location.href = url;
   }
