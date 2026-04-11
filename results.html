@@ -3,7 +3,7 @@
 <head>
   <title>Goobgle Results</title>
 
-  <!-- Your Google Programmable Search Engine -->
+  <!-- Google Programmable Search Engine -->
   <script async src="https://cse.google.com/cse.js?cx=a342734638e414f23"></script>
 
   <style>
@@ -12,18 +12,21 @@
       margin: 0;
     }
 
+    /* TOP BAR */
     .top-bar {
       display: flex;
       align-items: center;
-      padding: 15px 20px;
+      gap: 20px;
+      padding: 12px 20px;
       border-bottom: 1px solid #ddd;
     }
 
-    /* FIXED LOGO */
+    /* LOGO (fixed spacing) */
     .logo {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: bold;
-      letter-spacing: -2px; /* key fix */
+      letter-spacing: -2px;
+      cursor: pointer;
     }
 
     .blue { color: #4285F4; }
@@ -31,20 +34,61 @@
     .yellow { color: #FBBC05; }
     .green { color: #34A853; }
 
-    /* Optional: tighten even more like Google */
-    .logo span {
-      display: inline-block;
-      margin: 0;
-      padding: 0;
+    /* SEARCH BAR */
+    .search-box {
+      flex: 1;
+    }
+
+    .search-box input {
+      width: 60%;
+      max-width: 600px;
+      padding: 10px 16px;
+      border-radius: 20px;
+      border: 1px solid #dcdcdc;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-box input:focus {
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    }
+
+    .search-box button {
+      padding: 9px 14px;
+      margin-left: 8px;
+      border: none;
+      background: #f8f9fa;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .search-box button:hover {
+      border: 1px solid #ccc;
     }
   </style>
+
+  <script>
+    function newSearch(event) {
+      event.preventDefault();
+
+      let query = document.getElementById("searchInput").value;
+
+      if (query.trim() !== "") {
+        window.location.href =
+          "https://goobgle.github.io/results?q=" + encodeURIComponent(query);
+      }
+    }
+  </script>
 
 </head>
 
 <body>
 
+<!-- TOP BAR -->
 <div class="top-bar">
-  <div class="logo">
+
+  <!-- LOGO (click goes home) -->
+  <div class="logo" onclick="window.location.href='https://goobgle.github.io'">
     <span class="blue">G</span>
     <span class="red">o</span>
     <span class="yellow">o</span>
@@ -53,9 +97,18 @@
     <span class="red">l</span>
     <span class="yellow">e</span>
   </div>
+
+  <!-- SEARCH BAR -->
+  <div class="search-box">
+    <form onsubmit="newSearch(event)">
+      <input type="text" id="searchInput" placeholder="Search Goobgle...">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+
 </div>
 
-<!-- Results -->
+<!-- RESULTS -->
 <div class="gcse-searchresults-only"></div>
 
 </body>
