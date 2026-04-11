@@ -8,15 +8,50 @@
       margin-top: 100px;
       font-family: Arial, sans-serif;
     }
+
     .logo span {
       font-size: 120px;
       font-weight: bold;
       display: inline-block;
     }
+
     .blue { color: #4285F4; }
     .red { color: #EA4335; }
     .yellow { color: #FBBC05; }
     .green { color: #34A853; }
+
+    /* Search bar styling */
+    .search-box {
+      margin-top: 30px;
+    }
+
+    input[type="text"] {
+      width: 500px;
+      padding: 12px 20px;
+      border-radius: 25px;
+      border: 1px solid #dcdcdc;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input[type="text"]:hover,
+    input[type="text"]:focus {
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      background-color: #f8f9fa;
+      cursor: pointer;
+      font-size: 14px;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      border: 1px solid #ccc;
+    }
   </style>
 </head>
 <body>
@@ -30,6 +65,29 @@
   <span class="red">l</span>
   <span class="yellow">e</span>
 </div>
+
+<div class="search-box">
+  <form onsubmit="searchGoogle(event)">
+    <input type="text" id="searchInput" placeholder="Search Goobgle...">
+    <br>
+    <button type="submit">Goobgle Search</button>
+  </form>
+</div>
+
+<script>
+  function searchGoogle(event) {
+    event.preventDefault();
+
+    let query = document.getElementById("searchInput").value;
+
+    // Add -ai to remove AI results
+    let finalQuery = query + " -ai";
+
+    let url = "https://www.google.com/search?q=" + encodeURIComponent(finalQuery);
+
+    window.location.href = url;
+  }
+</script>
 
 </body>
 </html>
