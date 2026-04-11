@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Goobgle logo thingy</title>
+  <title>Goobgle</title>
+
   <style>
     body {
       text-align: center;
-      margin-top: 100px;
+      margin-top: 120px;
       font-family: Arial, sans-serif;
     }
 
     .logo span {
-      font-size: 120px;
+      font-size: 100px;
       font-weight: bold;
       display: inline-block;
     }
@@ -20,14 +21,13 @@
     .yellow { color: #FBBC05; }
     .green { color: #34A853; }
 
-    /* Search bar styling */
     .search-box {
       margin-top: 30px;
     }
 
     input[type="text"] {
       width: 500px;
-      padding: 12px 20px;
+      padding: 14px 20px;
       border-radius: 25px;
       border: 1px solid #dcdcdc;
       font-size: 16px;
@@ -53,6 +53,20 @@
       border: 1px solid #ccc;
     }
   </style>
+
+  <script>
+    function searchGoobgle(event) {
+      event.preventDefault();
+
+      let query = document.getElementById("searchInput").value;
+
+      if (query.trim() !== "") {
+        let url = "https://goobgle.github.io/results?q=" + encodeURIComponent(query);
+        window.location.href = url;
+      }
+    }
+  </script>
+
 </head>
 <body>
 
@@ -67,24 +81,12 @@
 </div>
 
 <div class="search-box">
-  <form onsubmit="searchGoogle(event)">
+  <form onsubmit="searchGoobgle(event)">
     <input type="text" id="searchInput" placeholder="Search Goobgle...">
     <br>
     <button type="submit">Goobgle Search</button>
   </form>
 </div>
-
-<script>
-function searchGoogle(event) {
-  event.preventDefault();
-
-  let query = document.getElementById("searchInput").value;
-
-  window.location.href = "https://goobgle.github.io/results?q=" + encodeURIComponent(query);
-}
-    window.location.href = url;
-  }
-</script>
 
 </body>
 </html>
