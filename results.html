@@ -3,23 +3,27 @@
 <head>
   <title>Goobgle Results</title>
 
-  <script async src="https://cse.google.com/cse.js?cx=c1cd671e9342444b9"></script>
+  <!-- Your Google Programmable Search Engine -->
+  <script async src="https://cse.google.com/cse.js?cx=a342734638e414f23"></script>
 
   <style>
     body {
       font-family: Arial;
       margin: 0;
-      padding: 0;
     }
 
     .top-bar {
-      padding: 20px;
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
       border-bottom: 1px solid #ddd;
     }
 
-    .logo span {
-      font-size: 30px;
+    /* FIXED LOGO */
+    .logo {
+      font-size: 28px;
       font-weight: bold;
+      letter-spacing: -2px; /* key fix */
     }
 
     .blue { color: #4285F4; }
@@ -27,38 +31,16 @@
     .yellow { color: #FBBC05; }
     .green { color: #34A853; }
 
-    .search-container {
-      margin-top: 10px;
-    }
-
-    input.gsc-input {
-      border-radius: 20px !important;
+    /* Optional: tighten even more like Google */
+    .logo span {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
     }
   </style>
 
-  <script>
-    function getQuery() {
-      let params = new URLSearchParams(window.location.search);
-      return params.get("q");
-    }
-
-    function loadQuery() {
-      let query = getQuery();
-
-      if (query) {
-        window.__gcse = {
-          callback: function() {
-            document.querySelector("input.gsc-input").value = query;
-            document.querySelector("button.gsc-search-button").click();
-          }
-        };
-      }
-    }
-
-    loadQuery();
-  </script>
-
 </head>
+
 <body>
 
 <div class="top-bar">
@@ -73,7 +55,8 @@
   </div>
 </div>
 
-<div class="gcse-search"></div>
+<!-- Results -->
+<div class="gcse-searchresults-only"></div>
 
 </body>
 </html>
