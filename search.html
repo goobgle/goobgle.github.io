@@ -75,16 +75,13 @@
 </div>
 
 <script>
-  function searchGoogle(event) {
-    event.preventDefault();
+function searchGoogle(event) {
+  event.preventDefault();
 
-    let query = document.getElementById("searchInput").value;
+  let query = document.getElementById("searchInput").value;
 
-    // Add -ai to remove AI results
-    let finalQuery = query + " -ai";
-
-let url = "https://www.google.com/search?udm=14&q=" + encodeURIComponent(query);
-
+  window.location.href = "https://goobgle.github.io/results?q=" + encodeURIComponent(query);
+}
     window.location.href = url;
   }
 </script>
