@@ -4,7 +4,10 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
-  signOut
+  signOut,
+  updateEmail,
+  updatePassword,
+  deleteUser
 } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
 import {
@@ -33,58 +36,28 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-export async function register(email, password) {
-  const userCred = await createUserWithEmailAndPassword(auth, email, password);
+/* AUTH */
+export const register = (e,p) => createUserWithEmailAndPassword(auth,e,p);
+export const login = (e,p) => signInWithEmailAndPassword(auth,e,p);
+export const logout = () => signOut(auth);
+export const currentUser = (cb) => onAuthStateChanged(auth, cb);
 
-  await setDoc(doc(db, "users", userCred.user.uid), {
-    email,
-    username: email.split("@")[0],
-    isAdmin: false,
-    searchesToday: 0,
-    history: []
-  });
-
-  return userCred.user;
-}
-
-export async function login(email, password) {
-  const userCred = await signInWithEmailAndPassword(auth, email, password);
-  return userCred.user;
-}
-
-export function logout() {
-  return signOut(auth);
-}
-
-export function currentUser(cb) {
-  return onAuthStateChanged(auth, cb);
-}
-
+/* DATA */
 export async function saveSearch(user, query) {
   if (!user) return;
 
-  await updateDoc(doc(db, "users", user.uid), {
+  await updateDoc(doc(db,"users",user.uid), {
     history: arrayUnion(query),
     searchesToday: increment(1)
   });
 }
 
-export async function getUserData(uid) {
-  const snap = await getDoc(doc(db, "users", uid));
-  return snap.exists() ? snap.data() : null;
-}
-
 export async function getAllUsers() {
-  const snap = await getDocs(collection(db, "users"));
-
+  const snap = await getDocs(collection(db,"users"));
   let users = [];
-
-  snap.forEach(d => {
-    users.push({
-      username: d.data().username,
-      searchesToday: d.data().searchesToday || 0
-    });
-  });
-
+  snap.forEach(d => users.push(d.data()));
   return users;
 }
+
+/* ACCOUNT ACTIONS */
+export { updateEmail, updatePassword, deleteUser };
