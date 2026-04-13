@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+t<!DOCTYPE html>
 <html>
 <head>
   <title>Goobgle Results</title>
@@ -157,3 +157,50 @@
 
 </body>
 </html>
+/* FIX WHITE BOXES + TABS */
+
+/* Main container background */
+body.dark .gsc-control-cse,
+body.dark .gsc-control-cse .gsc-table-result {
+  background-color: #202124 !important;
+}
+
+/* Individual result blocks */
+body.dark .gsc-result {
+  background-color: #202124 !important;
+  border-color: #444 !important;
+}
+
+/* Tabs (Web / Images) */
+body.dark .gsc-tabsArea {
+  background-color: #202124 !important;
+  border-bottom: 1px solid #444 !important;
+}
+
+/* Tab buttons */
+body.dark .gsc-tabHeader {
+  background-color: #202124 !important;
+  color: #bdc1c6 !important;
+}
+
+/* Active tab */
+body.dark .gsc-tabHeader.gsc-tabhActive {
+  color: #8ab4f8 !important;
+  border-bottom: 2px solid #8ab4f8 !important;
+}
+
+/* Borders around sections */
+body.dark .gsc-results-wrapper-visible {
+  background-color: #202124 !important;
+  border: none !important;
+}
+
+/* Fix white gaps */
+body.dark .gsc-webResult.gsc-result {
+  background-color: #202124 !important;
+}
+
+/* Pagination area */
+body.dark .gsc-cursor-box {
+  background-color: #202124 !important;
+}
