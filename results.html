@@ -4,166 +4,61 @@
   <title>Goobgle Results</title>
 
   <script async src="https://cse.google.com/cse.js?cx=a342734638e414f23"></script>
+  <script type="module" src="firebase.js"></script>
 
   <style>
-    body {
-      font-family: Arial;
-      margin: 0;
-      background: white;
-      color: black;
+    body { margin:0; font-family:Arial; }
+
+    .top {
+      display:flex;
+      gap:20px;
+      padding:10px;
+      border-bottom:1px solid #ddd;
+      align-items:center;
     }
 
-    body.dark {
-      background: #202124;
-      color: white;
-    }
+    .logo span { font-weight:bold; font-size:24px; }
 
-    /* TOP BAR */
-    .top-bar {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      padding: 10px 20px;
-      border-bottom: 1px solid #ddd;
-    }
+    .blue { color:#4285F4; }
+    .red { color:#EA4335; }
+    .yellow { color:#FBBC05; }
+    .green { color:#34A853; }
 
-    body.dark .top-bar {
-      border-bottom: 1px solid #444;
-    }
-
-    /* 🌈 LOGO */
-    .logo {
-      font-size: 26px;
-      font-weight: bold;
-      letter-spacing: -2px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-    }
-
-    .blue { color: #4285F4; }
-    .red { color: #EA4335; }
-    .yellow { color: #FBBC05; }
-    .green { color: #34A853; }
-
-    /* 🔍 SEARCH BAR */
-    .search-box input {
-      width: 600px;
-      max-width: 100%;
-      padding: 10px 16px;
-      border-radius: 20px;
-      border: 1px solid #dcdcdc;
-      font-size: 14px;
-    }
-
-    body.dark .search-box input {
-      background: #303134;
-      color: white;
-      border: 1px solid #555;
-    }
-
-    /* 🌙 GOOGLE RESULTS DARK FIX */
-    body.dark .gsc-control-cse,
-    body.dark .gsc-table-result,
-    body.dark .gsc-result,
-    body.dark .gsc-results-wrapper-visible,
-    body.dark .gsc-webResult {
-      background: #202124 !important;
-      border: none !important;
-    }
-
-    body.dark .gs-title {
-      color: #8ab4f8 !important;
-    }
-
-    body.dark .gs-snippet {
-      color: #bdc1c6 !important;
-    }
-
-    body.dark .gs-visibleUrl {
-      color: #9aa0a6 !important;
-    }
-
-    /* 🧼 TAB FIX (Web / Images) */
-    body.dark .gsc-tabsArea {
-      background: #202124 !important;
-      border-bottom: 1px solid #444 !important;
-    }
-
-    body.dark .gsc-tabHeader {
-      background: #202124 !important;
-      color: #bdc1c6 !important;
-      border: none !important;
-    }
-
-    body.dark .gsc-tabHeader.gsc-tabhActive {
-      background: #202124 !important;
-      color: #8ab4f8 !important;
-      border-bottom: 2px solid #8ab4f8 !important;
-    }
-
-    body.dark .gsc-tabHeader:hover {
-      background: #303134 !important;
-    }
-
-    /* REMOVE ANY EXTRA WHITE BOXES */
-    body.dark .gsc-control-cse,
-    body.dark .gsc-results-wrapper-overlay,
-    body.dark .gsc-webResult.gsc-result {
-      background: #202124 !important;
+    input {
+      width:600px;
+      padding:10px;
+      border-radius:20px;
     }
   </style>
-
-  <script>
-    function newSearch(e) {
-      e.preventDefault();
-      let q = document.getElementById("q").value;
-
-      if (q.trim() !== "") {
-        window.location.href =
-          "results?q=" + encodeURIComponent(q);
-      }
-    }
-
-    function getCookie(name) {
-      let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-      return match ? match[2] : null;
-    }
-
-    window.onload = function() {
-      if (getCookie("darkMode") === "true") {
-        document.body.classList.add("dark");
-      }
-    };
-  </script>
-
 </head>
 
 <body>
 
-<!-- TOP BAR -->
-<div class="top-bar">
-
-  <!-- 🌈 LOGO -->
+<div class="top">
   <div class="logo" onclick="location.href='index.html'">
-    <span class="blue">G</span>
-    <span class="red">o</span>
-    <span class="yellow">o</span>
-    <span class="blue">b</span>
-    <span class="green">g</span>
-    <span class="red">l</span>
-    <span class="yellow">e</span>
+    <span class="blue">G</span><span class="red">o</span><span class="yellow">o</span>
+    <span class="blue">b</span><span class="green">g</span><span class="red">l</span><span class="yellow">e</span>
   </div>
 
-  <!-- SEARCH -->
-  <form class="search-box" onsubmit="newSearch(event)">
-    <input id="q" placeholder="Search Goobgle...">
-  </form>
-
+  <input id="q">
+  <button onclick="search()">Search</button>
 </div>
 
-<!-- RESULTS -->
 <div class="gcse-searchresults-only"></div>
+
+<script type="module">
+import { currentUser, saveSearch } from "./firebase.js";
+
+let user = null;
+currentUser(u => user = u);
+
+window.search = async function () {
+  let q = document.getElementById("q").value;
+  if (user) await saveSearch(user, q);
+
+  location.href = "results.html?q=" + encodeURIComponent(q);
+}
+</script>
 
 </body>
 </html>
