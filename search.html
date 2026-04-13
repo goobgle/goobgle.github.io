@@ -2,22 +2,19 @@
 <html>
 <head>
   <title>Goobgle</title>
+  <script type="module" src="firebase.js"></script>
 
   <style>
     body {
       text-align: center;
       margin-top: 120px;
       font-family: Arial;
-      background: white;
     }
 
-    body.dark {
-      background: #202124;
-      color: white;
+    .logo span {
+      font-size: 90px;
+      font-weight: bold;
     }
-
-    .logo { letter-spacing: -6px; }
-    .logo span { font-size: 100px; font-weight: bold; }
 
     .blue { color: #4285F4; }
     .red { color: #EA4335; }
@@ -28,54 +25,10 @@
       width: 500px;
       padding: 14px;
       border-radius: 25px;
-      border: 1px solid #ccc;
-    }
-
-    body.dark input {
-      background: #303134;
-      color: white;
-      border: 1px solid #555;
-    }
-
-    .buttons {
-      margin-top: 20px;
-    }
-
-    button {
-      padding: 10px 20px;
-      margin: 5px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    body.dark button {
-      background: #303134;
-      color: white;
-      border: 1px solid #555;
     }
   </style>
-
-  <script>
-    function searchGoobgle(e) {
-      e.preventDefault();
-      let q = document.getElementById("q").value;
-      window.location.href = "results?q=" + encodeURIComponent(q);
-    }
-
-    function getCookie(name) {
-      let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-      return match ? match[2] : null;
-    }
-
-    window.onload = function() {
-      if (getCookie("darkMode") === "true") {
-        document.body.classList.add("dark");
-      }
-    };
-  </script>
-
 </head>
+
 <body>
 
 <div class="logo">
@@ -88,14 +41,29 @@
   <span class="yellow">e</span>
 </div>
 
-<form onsubmit="searchGoobgle(event)">
-  <input id="q" placeholder="Search Goobgle...">
-  
-  <div class="buttons">
-    <button type="submit">Goobgle Search</button>
-    <button type="button" onclick="location.href='settings.html'">⚙️ Settings</button>
-  </div>
-</form>
+<br>
+
+<input id="q" placeholder="Search Goobgle...">
+<br><br>
+
+<button onclick="search()">Search</button>
+<button onclick="location.href='login.html'">Login</button>
+
+<script type="module">
+import { currentUser, saveSearch } from "./firebase.js";
+
+let user = null;
+
+currentUser(u => user = u);
+
+window.search = async function () {
+  let q = document.getElementById("q").value;
+
+  if (user) await saveSearch(user, q);
+
+  location.href = "results.html?q=" + encodeURIComponent(q);
+}
+</script>
 
 </body>
 </html>
