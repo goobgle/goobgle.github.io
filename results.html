@@ -1,4 +1,4 @@
-t<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Goobgle Results</title>
@@ -6,15 +6,10 @@ t<!DOCTYPE html>
   <script async src="https://cse.google.com/cse.js?cx=a342734638e414f23"></script>
 
   <style>
-    html, body {
-      height: 100%;
-    }
-
     body {
       font-family: Arial;
       margin: 0;
       background: white;
-      color: black;
     }
 
     body.dark {
@@ -26,7 +21,7 @@ t<!DOCTYPE html>
       display: flex;
       align-items: center;
       gap: 20px;
-      padding: 12px 20px;
+      padding: 10px 20px;
       border-bottom: 1px solid #ddd;
     }
 
@@ -35,93 +30,47 @@ t<!DOCTYPE html>
     }
 
     .logo {
-      font-size: 26px;
-      font-weight: bold;
+      font-size: 24px;
       letter-spacing: -2px;
       cursor: pointer;
     }
 
-    .blue { color: #4285F4; }
-    .red { color: #EA4335; }
-    .yellow { color: #FBBC05; }
-    .green { color: #34A853; }
-
     .search-box input {
-      width: 60%;
-      max-width: 600px;
-      padding: 10px 16px;
+      width: 500px;
+      padding: 10px;
       border-radius: 20px;
-      border: 1px solid #dcdcdc;
     }
 
     body.dark .search-box input {
       background: #303134;
       color: white;
-      border: 1px solid #555;
     }
 
-    .dark-toggle {
-      cursor: pointer;
-      font-size: 18px;
-    }
-
-    /* GOOGLE RESULTS DARK MODE */
-    body.dark .gsc-control-cse {
-      background-color: #202124 !important;
+    /* GOOGLE DARK FIX */
+    body.dark .gsc-control-cse,
+    body.dark .gsc-table-result,
+    body.dark .gsc-result,
+    body.dark .gsc-tabsArea,
+    body.dark .gsc-results-wrapper-visible {
+      background: #202124 !important;
       border: none !important;
     }
 
-    body.dark .gsc-webResult {
-      background-color: #202124 !important;
-    }
+    body.dark .gs-title { color: #8ab4f8 !important; }
+    body.dark .gs-snippet { color: #bdc1c6 !important; }
 
-    body.dark .gs-title {
-      color: #8ab4f8 !important;
-    }
-
-    body.dark .gs-snippet {
-      color: #bdc1c6 !important;
-    }
-
-    body.dark .gs-visibleUrl {
-      color: #9aa0a6 !important;
-    }
   </style>
 
   <script>
-    function newSearch(event) {
-      event.preventDefault();
-      let query = document.getElementById("searchInput").value;
-
-      if (query.trim() !== "") {
-        window.location.href =
-          "https://goobgle.github.io/results?q=" + encodeURIComponent(query);
-      }
-    }
-
-    function setCookie(name, value, days) {
-      let expires = "";
-      if (days) {
-        let date = new Date();
-        date.setTime(date.getTime() + (days*24*60*60*1000));
-        expires = "; expires=" + date.toUTCString();
-      }
-      document.cookie = name + "=" + value + expires + "; path=/";
+    function newSearch(e) {
+      e.preventDefault();
+      let q = document.getElementById("q").value;
+      window.location.href = "results?q=" + encodeURIComponent(q);
     }
 
     function getCookie(name) {
-      let nameEQ = name + "=";
-      let ca = document.cookie.split(';');
-      for(let c of ca) {
-        c = c.trim();
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length);
-      }
-      return null;
-    }
-
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark");
-      setCookie("darkMode", document.body.classList.contains("dark"), 365);
+      let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? match[2] : null;
     }
 
     window.onload = function() {
@@ -136,71 +85,16 @@ t<!DOCTYPE html>
 <body>
 
 <div class="top-bar">
-  <div class="logo" onclick="window.location.href='https://goobgle.github.io'">
-    <span class="blue">G</span>
-    <span class="red">o</span>
-    <span class="yellow">o</span>
-    <span class="blue">b</span>
-    <span class="green">g</span>
-    <span class="red">l</span>
-    <span class="yellow">e</span>
+  <div class="logo" onclick="location.href='index.html'">
+    Goobgle
   </div>
 
   <form class="search-box" onsubmit="newSearch(event)">
-    <input type="text" id="searchInput" placeholder="Search Goobgle...">
+    <input id="q" placeholder="Search...">
   </form>
-
-  <div class="dark-toggle" onclick="toggleDarkMode()">🌙</div>
 </div>
 
 <div class="gcse-searchresults-only"></div>
 
 </body>
 </html>
-/* FIX WHITE BOXES + TABS */
-
-/* Main container background */
-body.dark .gsc-control-cse,
-body.dark .gsc-control-cse .gsc-table-result {
-  background-color: #202124 !important;
-}
-
-/* Individual result blocks */
-body.dark .gsc-result {
-  background-color: #202124 !important;
-  border-color: #444 !important;
-}
-
-/* Tabs (Web / Images) */
-body.dark .gsc-tabsArea {
-  background-color: #202124 !important;
-  border-bottom: 1px solid #444 !important;
-}
-
-/* Tab buttons */
-body.dark .gsc-tabHeader {
-  background-color: #202124 !important;
-  color: #bdc1c6 !important;
-}
-
-/* Active tab */
-body.dark .gsc-tabHeader.gsc-tabhActive {
-  color: #8ab4f8 !important;
-  border-bottom: 2px solid #8ab4f8 !important;
-}
-
-/* Borders around sections */
-body.dark .gsc-results-wrapper-visible {
-  background-color: #202124 !important;
-  border: none !important;
-}
-
-/* Fix white gaps */
-body.dark .gsc-webResult.gsc-result {
-  background-color: #202124 !important;
-}
-
-/* Pagination area */
-body.dark .gsc-cursor-box {
-  background-color: #202124 !important;
-}
