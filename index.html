@@ -1,24 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Welcome To Goobgle</title>
+  <title>Goobgle</title>
+
+  <style>
+    body {
+      text-align: center;
+      margin-top: 120px;
+      font-family: Arial;
+      background: white;
+    }
+
+    body.dark {
+      background: #202124;
+      color: white;
+    }
+
+    .logo { letter-spacing: -6px; }
+    .logo span { font-size: 100px; font-weight: bold; }
+
+    .blue { color: #4285F4; }
+    .red { color: #EA4335; }
+    .yellow { color: #FBBC05; }
+    .green { color: #34A853; }
+
+    input {
+      width: 500px;
+      padding: 14px;
+      border-radius: 25px;
+      border: 1px solid #ccc;
+    }
+
+    body.dark input {
+      background: #303134;
+      color: white;
+      border: 1px solid #555;
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    body.dark button {
+      background: #303134;
+      color: white;
+      border: 1px solid #555;
+    }
+  </style>
+
   <script>
-    setTimeout(function() {
-      window.location.href = "https://goobgle.github.io/search";
-    }, 1000);
+    function searchGoobgle(e) {
+      e.preventDefault();
+      let q = document.getElementById("q").value;
+      window.location.href = "results?q=" + encodeURIComponent(q);
+    }
+
+    function getCookie(name) {
+      let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? match[2] : null;
+    }
+
+    window.onload = function() {
+      if (getCookie("darkMode") === "true") {
+        document.body.classList.add("dark");
+      }
+    };
   </script>
 
 </head>
-<body style="text-align:center; margin-top:100px; font-family:Arial;">
+<body>
 
-<h1>Welcome To Goobgle!</h1>
+<div class="logo">
+  <span class="blue">G</span>
+  <span class="red">o</span>
+  <span class="yellow">o</span>
+  <span class="blue">b</span>
+  <span class="green">g</span>
+  <span class="red">l</span>
+  <span class="yellow">e</span>
+</div>
 
-<p>You will be redirected to the landing page shortly</p>
-<p>If not redirected, go to:</p>
-
-<p style="color:blue;">https://goobgle.github.io/search</p>
-
-<a href="https://goobgle.github.io/search">Or click here!</a>
+<form onsubmit="searchGoobgle(event)">
+  <input id="q" placeholder="Search Goobgle...">
+  
+  <div class="buttons">
+    <button type="submit">Goobgle Search</button>
+    <button type="button" onclick="location.href='settings.html'">⚙️ Settings</button>
+  </div>
+</form>
 
 </body>
 </html>
