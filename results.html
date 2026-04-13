@@ -3,16 +3,25 @@
 <head>
   <title>Goobgle Results</title>
 
-  <!-- Google Programmable Search Engine -->
   <script async src="https://cse.google.com/cse.js?cx=a342734638e414f23"></script>
 
   <style>
+    html, body {
+      height: 100%;
+    }
+
     body {
       font-family: Arial;
       margin: 0;
+      background: white;
+      color: black;
     }
 
-    /* TOP BAR */
+    body.dark {
+      background: #202124;
+      color: white;
+    }
+
     .top-bar {
       display: flex;
       align-items: center;
@@ -21,7 +30,10 @@
       border-bottom: 1px solid #ddd;
     }
 
-    /* LOGO (fixed spacing) */
+    body.dark .top-bar {
+      border-bottom: 1px solid #444;
+    }
+
     .logo {
       font-size: 26px;
       font-weight: bold;
@@ -34,43 +46,51 @@
     .yellow { color: #FBBC05; }
     .green { color: #34A853; }
 
-    /* SEARCH BAR */
-    .search-box {
-      flex: 1;
-    }
-
     .search-box input {
       width: 60%;
       max-width: 600px;
       padding: 10px 16px;
       border-radius: 20px;
       border: 1px solid #dcdcdc;
-      font-size: 14px;
-      outline: none;
     }
 
-    .search-box input:focus {
-      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    body.dark .search-box input {
+      background: #303134;
+      color: white;
+      border: 1px solid #555;
     }
 
-    .search-box button {
-      padding: 9px 14px;
-      margin-left: 8px;
-      border: none;
-      background: #f8f9fa;
-      border-radius: 4px;
+    .dark-toggle {
       cursor: pointer;
+      font-size: 18px;
     }
 
-    .search-box button:hover {
-      border: 1px solid #ccc;
+    /* GOOGLE RESULTS DARK MODE */
+    body.dark .gsc-control-cse {
+      background-color: #202124 !important;
+      border: none !important;
+    }
+
+    body.dark .gsc-webResult {
+      background-color: #202124 !important;
+    }
+
+    body.dark .gs-title {
+      color: #8ab4f8 !important;
+    }
+
+    body.dark .gs-snippet {
+      color: #bdc1c6 !important;
+    }
+
+    body.dark .gs-visibleUrl {
+      color: #9aa0a6 !important;
     }
   </style>
 
   <script>
     function newSearch(event) {
       event.preventDefault();
-
       let query = document.getElementById("searchInput").value;
 
       if (query.trim() !== "") {
@@ -78,16 +98,44 @@
           "https://goobgle.github.io/results?q=" + encodeURIComponent(query);
       }
     }
+
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + value + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+      let nameEQ = name + "=";
+      let ca = document.cookie.split(';');
+      for(let c of ca) {
+        c = c.trim();
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length);
+      }
+      return null;
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+      setCookie("darkMode", document.body.classList.contains("dark"), 365);
+    }
+
+    window.onload = function() {
+      if (getCookie("darkMode") === "true") {
+        document.body.classList.add("dark");
+      }
+    };
   </script>
 
 </head>
 
 <body>
 
-<!-- TOP BAR -->
 <div class="top-bar">
-
-  <!-- LOGO (click goes home) -->
   <div class="logo" onclick="window.location.href='https://goobgle.github.io'">
     <span class="blue">G</span>
     <span class="red">o</span>
@@ -98,17 +146,13 @@
     <span class="yellow">e</span>
   </div>
 
-  <!-- SEARCH BAR -->
-  <div class="search-box">
-    <form onsubmit="newSearch(event)">
-      <input type="text" id="searchInput" placeholder="Search Goobgle...">
-      <button type="submit">Search</button>
-    </form>
-  </div>
+  <form class="search-box" onsubmit="newSearch(event)">
+    <input type="text" id="searchInput" placeholder="Search Goobgle...">
+  </form>
 
+  <div class="dark-toggle" onclick="toggleDarkMode()">🌙</div>
 </div>
 
-<!-- RESULTS -->
 <div class="gcse-searchresults-only"></div>
 
 </body>
