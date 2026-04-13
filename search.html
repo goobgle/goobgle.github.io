@@ -3,12 +3,13 @@
 <head>
   <title>Goobgle</title>
   <script type="module" src="firebase.js"></script>
+  <script type="module" src="profile.js"></script>
 
   <style>
     body {
+      font-family: Arial;
       text-align: center;
       margin-top: 120px;
-      font-family: Arial;
     }
 
     .logo span {
@@ -16,21 +17,48 @@
       font-weight: bold;
     }
 
-    .blue { color: #4285F4; }
-    .red { color: #EA4335; }
-    .yellow { color: #FBBC05; }
-    .green { color: #34A853; }
+    .blue { color:#4285F4; }
+    .red { color:#EA4335; }
+    .yellow { color:#FBBC05; }
+    .green { color:#34A853; }
 
     input {
-      width: 500px;
+      width: 520px;
       padding: 14px;
-      border-radius: 25px;
+      border-radius: 24px;
+      border: 1px solid #dcdcdc;
+      font-size: 14px;
+    }
+
+    button {
+      margin: 15px 5px;
+      padding: 10px 16px;
+      border-radius: 4px;
+      border: 1px solid #f8f9fa;
+      background: #f8f9fa;
+      cursor: pointer;
+    }
+
+    button:hover {
+      border: 1px solid #dadce0;
     }
   </style>
 </head>
 
 <body>
 
+<!-- PROFILE -->
+<div id="profileContainer">
+  <div id="profileBtn" onclick="toggleProfileMenu()"></div>
+
+  <div id="profileMenu" class="menu">
+    <button onclick="toggleTheme()">Dark mode</button>
+    <button onclick="logoutUser()">Sign out</button>
+    <button onclick="deleteAccount()" style="color:red;">Delete account</button>
+  </div>
+</div>
+
+<!-- LOGO -->
 <div class="logo">
   <span class="blue">G</span>
   <span class="red">o</span>
@@ -44,17 +72,19 @@
 <br>
 
 <input id="q" placeholder="Search Goobgle...">
-<br><br>
+<br>
 
 <button onclick="search()">Search</button>
-<button onclick="location.href='login.html'">Login</button>
 
 <script type="module">
 import { currentUser, saveSearch } from "./firebase.js";
 
 let user = null;
 
-currentUser(u => user = u);
+currentUser(u => {
+  user = u;
+  updateProfile(u);
+});
 
 window.search = async function () {
   let q = document.getElementById("q").value;
@@ -62,6 +92,21 @@ window.search = async function () {
   if (user) await saveSearch(user, q);
 
   location.href = "results.html?q=" + encodeURIComponent(q);
+};
+
+/* ENTER FIX */
+document.getElementById("q").addEventListener("keydown", e => {
+  if (e.key === "Enter") search();
+});
+
+function updateProfile(user) {
+  const btn = document.getElementById("profileBtn");
+
+  if (!user) {
+    btn.innerHTML = `<div class="signInBtn" onclick="location.href='login.html'">Sign in</div>`;
+  } else {
+    btn.innerHTML = `<div class="avatar"></div>`;
+  }
 }
 </script>
 
