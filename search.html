@@ -4,16 +4,31 @@
   <title>Goobgle</title>
 
   <style>
+    html, body {
+      height: 100%;
+    }
+
     body {
       text-align: center;
       margin-top: 120px;
       font-family: Arial, sans-serif;
+      background: white;
+      color: black;
+      transition: 0.2s;
+    }
+
+    body.dark {
+      background: #202124;
+      color: white;
+    }
+
+    .logo {
+      letter-spacing: -6px;
     }
 
     .logo span {
       font-size: 100px;
       font-weight: bold;
-      display: inline-block;
     }
 
     .blue { color: #4285F4; }
@@ -32,11 +47,14 @@
       border: 1px solid #dcdcdc;
       font-size: 16px;
       outline: none;
+      background: white;
+      color: black;
     }
 
-    input[type="text"]:hover,
-    input[type="text"]:focus {
-      box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    body.dark input[type="text"] {
+      background: #303134;
+      color: white;
+      border: 1px solid #555;
     }
 
     button {
@@ -45,30 +63,71 @@
       border: none;
       background-color: #f8f9fa;
       cursor: pointer;
-      font-size: 14px;
       border-radius: 4px;
     }
 
-    button:hover {
-      border: 1px solid #ccc;
+    body.dark button {
+      background: #303134;
+      color: white;
+      border: 1px solid #555;
+    }
+
+    .dark-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+      font-size: 20px;
     }
   </style>
 
   <script>
     function searchGoobgle(event) {
       event.preventDefault();
-
       let query = document.getElementById("searchInput").value;
 
       if (query.trim() !== "") {
-        let url = "https://goobgle.github.io/results?q=" + encodeURIComponent(query);
-        window.location.href = url;
+        window.location.href =
+          "https://goobgle.github.io/results?q=" + encodeURIComponent(query);
       }
     }
+
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + value + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+      let nameEQ = name + "=";
+      let ca = document.cookie.split(';');
+      for(let c of ca) {
+        c = c.trim();
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length);
+      }
+      return null;
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+      setCookie("darkMode", document.body.classList.contains("dark"), 365);
+    }
+
+    window.onload = function() {
+      if (getCookie("darkMode") === "true") {
+        document.body.classList.add("dark");
+      }
+    };
   </script>
 
 </head>
 <body>
+
+<div class="dark-toggle" onclick="toggleDarkMode()">🌙</div>
 
 <div class="logo">
   <span class="blue">G</span>
