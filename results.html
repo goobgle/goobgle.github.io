@@ -31,7 +31,7 @@
       border-bottom: 1px solid #444;
     }
 
-    /* 🌈 LOGO FIXED */
+    /* 🌈 LOGO */
     .logo {
       font-size: 26px;
       font-weight: bold;
@@ -46,7 +46,7 @@
     .yellow { color: #FBBC05; }
     .green { color: #34A853; }
 
-    /* SEARCH BAR (FIXED BIGGER) */
+    /* 🔍 SEARCH BAR */
     .search-box input {
       width: 600px;
       max-width: 100%;
@@ -62,11 +62,10 @@
       border: 1px solid #555;
     }
 
-    /* 🌙 DARK MODE FIX FOR GOOGLE RESULTS */
+    /* 🌙 GOOGLE RESULTS DARK FIX */
     body.dark .gsc-control-cse,
     body.dark .gsc-table-result,
     body.dark .gsc-result,
-    body.dark .gsc-tabsArea,
     body.dark .gsc-results-wrapper-visible,
     body.dark .gsc-webResult {
       background: #202124 !important;
@@ -85,13 +84,34 @@
       color: #9aa0a6 !important;
     }
 
-    /* BUTTON (if any appears) */
-    body.dark button {
-      background: #303134;
-      color: white;
-      border: 1px solid #555;
+    /* 🧼 TAB FIX (Web / Images) */
+    body.dark .gsc-tabsArea {
+      background: #202124 !important;
+      border-bottom: 1px solid #444 !important;
     }
 
+    body.dark .gsc-tabHeader {
+      background: #202124 !important;
+      color: #bdc1c6 !important;
+      border: none !important;
+    }
+
+    body.dark .gsc-tabHeader.gsc-tabhActive {
+      background: #202124 !important;
+      color: #8ab4f8 !important;
+      border-bottom: 2px solid #8ab4f8 !important;
+    }
+
+    body.dark .gsc-tabHeader:hover {
+      background: #303134 !important;
+    }
+
+    /* REMOVE ANY EXTRA WHITE BOXES */
+    body.dark .gsc-control-cse,
+    body.dark .gsc-results-wrapper-overlay,
+    body.dark .gsc-webResult.gsc-result {
+      background: #202124 !important;
+    }
   </style>
 
   <script>
@@ -124,7 +144,7 @@
 <!-- TOP BAR -->
 <div class="top-bar">
 
-  <!-- 🌈 RESTORED LOGO -->
+  <!-- 🌈 LOGO -->
   <div class="logo" onclick="location.href='index.html'">
     <span class="blue">G</span>
     <span class="red">o</span>
