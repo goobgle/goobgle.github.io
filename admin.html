@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin</title>
+  <script type="module" src="firebase.js"></script>
+</head>
+
+<body>
+
+<h1>Admin Panel</h1>
+
+<div id="list"></div>
+
+<script type="module">
+import { currentUser, getAllUsers } from "./firebase.js";
+
+const ADMIN_UID = "YOUR_ADMIN_UID";
+
+currentUser(async user => {
+  if (!user || user.uid !== ADMIN_UID) {
+    document.body.innerHTML = "Access denied";
+    return;
+  }
+
+  let users = await getAllUsers();
+
+  document.getElementById("list").innerHTML =
+    users.map(u => `
+      <div style="border:1px solid #ccc;margin:10px;padding:10px">
+        <b>${u.username}</b><br>
+        Searches today: ${u.searchesToday}
+      </div>
+    `).join("");
+});
+</script>
+
+</body>
+</html>
