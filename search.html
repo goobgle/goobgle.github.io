@@ -4,17 +4,11 @@
   <title>Goobgle</title>
 
   <style>
-    html, body {
-      height: 100%;
-    }
-
     body {
       text-align: center;
       margin-top: 120px;
-      font-family: Arial, sans-serif;
+      font-family: Arial;
       background: white;
-      color: black;
-      transition: 0.2s;
     }
 
     body.dark {
@@ -22,48 +16,37 @@
       color: white;
     }
 
-    .logo {
-      letter-spacing: -6px;
-    }
-
-    .logo span {
-      font-size: 100px;
-      font-weight: bold;
-    }
+    .logo { letter-spacing: -6px; }
+    .logo span { font-size: 100px; font-weight: bold; }
 
     .blue { color: #4285F4; }
     .red { color: #EA4335; }
     .yellow { color: #FBBC05; }
     .green { color: #34A853; }
 
-    .search-box {
-      margin-top: 30px;
-    }
-
-    input[type="text"] {
+    input {
       width: 500px;
-      padding: 14px 20px;
+      padding: 14px;
       border-radius: 25px;
-      border: 1px solid #dcdcdc;
-      font-size: 16px;
-      outline: none;
-      background: white;
-      color: black;
+      border: 1px solid #ccc;
     }
 
-    body.dark input[type="text"] {
+    body.dark input {
       background: #303134;
       color: white;
       border: 1px solid #555;
     }
 
-    button {
+    .buttons {
       margin-top: 20px;
+    }
+
+    button {
       padding: 10px 20px;
+      margin: 5px;
       border: none;
-      background-color: #f8f9fa;
+      border-radius: 5px;
       cursor: pointer;
-      border-radius: 4px;
     }
 
     body.dark button {
@@ -71,50 +54,18 @@
       color: white;
       border: 1px solid #555;
     }
-
-    .dark-toggle {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      cursor: pointer;
-      font-size: 20px;
-    }
   </style>
 
   <script>
-    function searchGoobgle(event) {
-      event.preventDefault();
-      let query = document.getElementById("searchInput").value;
-
-      if (query.trim() !== "") {
-        window.location.href =
-          "https://goobgle.github.io/results?q=" + encodeURIComponent(query);
-      }
-    }
-
-    function setCookie(name, value, days) {
-      let expires = "";
-      if (days) {
-        let date = new Date();
-        date.setTime(date.getTime() + (days*24*60*60*1000));
-        expires = "; expires=" + date.toUTCString();
-      }
-      document.cookie = name + "=" + value + expires + "; path=/";
+    function searchGoobgle(e) {
+      e.preventDefault();
+      let q = document.getElementById("q").value;
+      window.location.href = "results?q=" + encodeURIComponent(q);
     }
 
     function getCookie(name) {
-      let nameEQ = name + "=";
-      let ca = document.cookie.split(';');
-      for(let c of ca) {
-        c = c.trim();
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length);
-      }
-      return null;
-    }
-
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark");
-      setCookie("darkMode", document.body.classList.contains("dark"), 365);
+      let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? match[2] : null;
     }
 
     window.onload = function() {
@@ -127,8 +78,6 @@
 </head>
 <body>
 
-<div class="dark-toggle" onclick="toggleDarkMode()">🌙</div>
-
 <div class="logo">
   <span class="blue">G</span>
   <span class="red">o</span>
@@ -139,13 +88,14 @@
   <span class="yellow">e</span>
 </div>
 
-<div class="search-box">
-  <form onsubmit="searchGoobgle(event)">
-    <input type="text" id="searchInput" placeholder="Search Goobgle...">
-    <br>
+<form onsubmit="searchGoobgle(event)">
+  <input id="q" placeholder="Search Goobgle...">
+  
+  <div class="buttons">
     <button type="submit">Goobgle Search</button>
-  </form>
-</div>
+    <button type="button" onclick="location.href='settings.html'">⚙️ Settings</button>
+  </div>
+</form>
 
 </body>
 </html>
