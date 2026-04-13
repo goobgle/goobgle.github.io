@@ -25,7 +25,8 @@ const firebaseConfig = {
   projectId: "goobgleacc",
   storageBucket: "goobgleacc.firebasestorage.app",
   messagingSenderId: "474972109718",
-  appId: "1:474972109718:web:502e9d0116fcf278997bb7"
+  appId: "1:474972109718:web:502e9d0116fcf278997bb7",
+  measurementId: "G-L632MLR6CG"
 };
 
 const app = initializeApp(firebaseConfig);
