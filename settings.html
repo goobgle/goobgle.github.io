@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Goobgle Settings</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin-top: 100px;
+      background: white;
+    }
+
+    body.dark {
+      background: #202124;
+      color: white;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+  </style>
+
+  <script>
+    function setCookie(name, value, days) {
+      let d = new Date();
+      d.setTime(d.getTime() + (days*24*60*60*1000));
+      document.cookie = name + "=" + value + ";expires=" + d.toUTCString() + ";path=/";
+    }
+
+    function getCookie(name) {
+      let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? match[2] : null;
+    }
+
+    function toggleDark() {
+      let enabled = document.body.classList.toggle("dark");
+      setCookie("darkMode", enabled, 365);
+    }
+
+    window.onload = function() {
+      if (getCookie("darkMode") === "true") {
+        document.body.classList.add("dark");
+      }
+    };
+  </script>
+
+</head>
+<body>
+
+<h1>Settings</h1>
+
+<button onclick="toggleDark()">🌙 Toggle Dark Mode</button>
+
+<br><br>
+<button onclick="location.href='index.html'">⬅ Back</button>
+
+</body>
+</html>
