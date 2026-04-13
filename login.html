@@ -1,33 +1,137 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login</title>
-  <script type="module" src="firebase.js"></script>
+  <title>Goobgle Login</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f1f3f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      width: 320px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .login {
+      background: #4285F4;
+      color: white;
+    }
+
+    .signup {
+      background: #34A853;
+      color: white;
+    }
+
+    .error {
+      color: red;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .blue { color:#4285F4; }
+    .red { color:#EA4335; }
+    .yellow { color:#FBBC05; }
+    .green { color:#34A853; }
+  </style>
 </head>
 
 <body>
 
-<h2>Login</h2>
+<div class="card">
 
-<input id="email" placeholder="email">
-<input id="pass" type="password" placeholder="password">
+  <div class="logo">
+    <span class="blue">G</span>
+    <span class="red">o</span>
+    <span class="yellow">o</span>
+    <span class="blue">b</span>
+    <span class="green">g</span>
+    <span class="red">l</span>
+    <span class="yellow">e</span>
+  </div>
 
-<br><br>
+  <h2>Sign in</h2>
 
-<button id="loginBtn">Login</button>
-<button id="signupBtn">Sign Up</button>
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+
+  <button class="login" id="loginBtn">Login</button>
+  <button class="signup" id="signupBtn">Create account</button>
+
+  <div class="error" id="error"></div>
+
+</div>
 
 <script type="module">
-import { login, register } from "./firebase.js";
+import {
+  auth,
+  login,
+  register
+} from "./firebase.js";
+
+const errorBox = document.getElementById("error");
+
+function showError(msg) {
+  errorBox.textContent = msg;
+}
 
 loginBtn.onclick = async () => {
-  await login(email.value, pass.value);
-  location.href = "index.html";
+  try {
+    errorBox.textContent = "";
+    await login(email.value, password.value);
+    window.location.href = "index.html";
+  } catch (e) {
+    showError(e.message);
+  }
 };
 
 signupBtn.onclick = async () => {
-  await register(email.value, pass.value);
-  location.href = "index.html";
+  try {
+    errorBox.textContent = "";
+    await register(email.value, password.value);
+    window.location.href = "index.html";
+  } catch (e) {
+    showError(e.message);
+  }
 };
 </script>
 
